@@ -425,7 +425,6 @@ Citizen.CreateThread(function()
 					blockinput = false
 
 					if quantity ~= nil and item ~= nil then
-						print('Executing Cosmic:GiveItem')
 						TriggerServerEvent('Cosmic:GiveItem', player.id, item, quantity)
 					end
 				end
@@ -939,7 +938,6 @@ end
 RegisterNetEvent('Cosmic:heal')
 AddEventHandler('Cosmic:heal', function(id)
     local closestPlayerPed = GetPlayerPed(id)
-    print(closestPlayerPed)
     local health = GetAttributeCoreValue(closestPlayerPed, 0)
     local newHealth = health + 100
     local stamina = GetAttributeCoreValue(closestPlayerPed, 1)
