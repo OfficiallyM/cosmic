@@ -3,7 +3,7 @@ RedM Cosmic admin menu for VORPCORE
 
 # Installation
 - Put into resources folder
-- Add 'ensure Cosmic' (without the quotes) into your server.cfg 
+- Add 'ensure Cosmic' (without the quotes) into your server.cfg
 - Copy the permissions.cfg from the Cosmic folder to the location your server.cfg is in
 - Add 'exec permissions.cfg' (without the quotes) into your server.cfg
 - Run the server
@@ -31,6 +31,7 @@ player.rp.money.remove
 player.rp.gold.add
 player.rp.gold.remove
 player.rp.item.add
+player.rp.weapon.add
 player.utility.god
 player.utility.heal
 player.utility.revive

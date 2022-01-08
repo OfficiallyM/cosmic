@@ -11,7 +11,7 @@ RegisterCommand("Stinky",function()
   Citizen.InvokeNative(0xB31A277C1AC7B7FF, PlayerPedId(), 0, 0, -166523388 , 1, 1, 0, 0)
 end)
 
---Tip hat.
+-- Tip hat.
 RegisterCommand("tip",function()
   Citizen.InvokeNative(0xB31A277C1AC7B7FF, PlayerPedId(), 0, 0, -1457020913 , 1, 1, 0, 0)
 end)

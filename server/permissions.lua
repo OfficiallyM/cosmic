@@ -15,6 +15,7 @@ Cosmic.Permissions.List = {
   'player.rp.gold.add',
   'player.rp.gold.remove',
   'player.rp.item.add',
+  'player.rp.weapon.add',
   'player.utility.god',
   'player.utility.heal',
   'player.utility.revive',

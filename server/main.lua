@@ -76,7 +76,7 @@ AddEventHandler("Cosmic:GiveWeapon", function(player, weapon, ammo, components)
 	local tarChar = targetPlayer.getUsedCharacter
 	local tarName = tarChar.firstname.. ' ' ..tarChar.lastname
 
-	if group == "moderator" or group == "admin" then
+	if Cosmic.Permissions.CheckPermission('player.rp.weapon.add') then
 		TriggerEvent("vorpCore:canCarryWeapons", tonumber(player), 1, function(canCarry)
 			if canCarry then
 				local message = "`"..playername.."` gave `"..tarName.. "` a `"..weapon.."`"
@@ -106,7 +106,7 @@ AddEventHandler("Cosmic:GiveItem", function(player, itemgiven, qty)
 	local tarChar = tarUser.getUsedCharacter
 	local tarName = tarChar.firstname..' '..tarChar.lastname
 
-	if group == "moderator" or group == "admin" then
+	if Cosmic.Permissions.CheckPermission('player.rp.item.add') then
 		TriggerEvent("vorpCore:canCarryItems", tonumber(player), tonumber(qty), function(canCarry)
 			if canCarry then
 				if contains2(inventory, itemgiven) then
