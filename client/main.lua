@@ -366,7 +366,6 @@ Citizen.CreateThread(function()
 					end
 
 					if item ~= 'close' then
-						Wait(1000)
 						TriggerEvent("vorpinputs:getInput", "Add", "Enter item quantity", function(cb)
 							quantity = cb
 						end)
