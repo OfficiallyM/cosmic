@@ -106,28 +106,3 @@ RegisterCommand("list", function()
 		print(v.name)
 	end
 end)
-
--- Give weapon command.
-TriggerEvent("chat:addSuggestion", "/giveweapon", "Example: /giveweapon [id] [weapon]")
-RegisterCommand("giveweapon", function(source, args, rawCommand)
-	local player = args[1]
-	local weapon = args[2]
-	local ammo = {["nothing"] = 0}
-	local components = {["nothing"] = 0}
-
-	TriggerServerEvent("GiveWeapon", player, weapon, ammo, components)
-end)
-
--- Give item command.
-TriggerEvent("chat:addSuggestion", "/giveitem", "Example: /giveitem [id] [item] [qty]")
-RegisterCommand("giveitem", function(source, args, rawCommand)
-	local player = args[1]
-	local item = args[2]
-	local qty = args[3]
-
-	if qty == "" or qty == nil then
-		TriggerEvent("vorp:TipRight", "You must enter a quantity", 2000)
-	else
-		TriggerServerEvent("GiveItem", player, item, qty)
-	end
-end)
