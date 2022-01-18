@@ -90,7 +90,7 @@ AddEventHandler("Cosmic:GiveWeapon", function(player, weapon, ammo, components)
 			end
 		end)
 	else
-		TriggerClientEvent("vorp:TipRight", _source, "This is an admin/moderator command only", 2000)
+		TriggerClientEvent("vorp:TipRight", _source, "You don't have permission to use this.", 2000)
 	end
 end)
 
@@ -146,7 +146,7 @@ AddEventHandler("Cosmic:GiveItem", function(player, itemgiven, qty)
 			end
 		end)
 	else
-		TriggerClientEvent("vorp:TipRight", _source, "This is an admin/moderator only command", 2000)
+		TriggerClientEvent("vorp:TipRight", _source, "You don't have permission to use this.", 2000)
 	end
 end)
 
@@ -188,74 +188,6 @@ AddEventHandler("KickPlayer", function(target)
   end
 end)
 
-RegisterServerEvent("DelObj")
-AddEventHandler("DelObj", function(type)
-	local _source = source
-	local User = VorpCore.getUser(_source)
-	local group = User.getGroup
-	local deltype = tonumber(type)
-
-	if group == "admin" then
-		if deltype == "on" then
-			TriggerClientEvent("ObjectDeleteOn", _source)
-		end
-		if deltype == "off" then
-			TriggerClientEvent("ObjectDeleteOff", _source)
-		end
-	else
-		TriggerClientEvent("vorp:TipRight", _source, "This is an admin only command", 2000)
-	end
-end)
-
-RegisterCommand("givewep", function(source, args)
-  if args ~= nil then
-    local User = VorpCore.getUser(source)
-    local Character = User.getUsedCharacter
-    local playername = Character.firstname.. ' ' ..Character.lastname
-    local _source = source
-    local group = User.getGroup -- Return user group (not character group)
-    local id =   args[1]
-    local weaponHash =   tostring(args[2])
-    local ammo = {["nothing"] = 0}
-    local components =  {["nothing"] = 0}
-    if group == "admin" then
-      TriggerEvent("vorpCore:canCarryWeapons", tonumber(id), 1, function(canCarry)
-
-        if canCarry then
-         -- TriggerEvent("vorpCore:registerWeapon", tonumber(id), weaponHash, ammo, components)
-          VorpInv.createWeapon(tonumber(id), weaponHash, ammo, components)
-
-        end
-      end)
-
-    else return false
-    end
-  end
-end)
-
-RegisterCommand("tpm", function(source, args)
-  local _source = source
-  local User = VorpCore.getUser(source) -- Return User with functions and all characters
-  local group = User.getGroup -- Return user group (not character group)
-  if group == "admin" then
-    TriggerClientEvent('syn:tpm2', _source,_source)
-  else return false
- end
-end)
-
-RegisterCommand("tp", function(source, args)
-  local User = VorpCore.getUser(source) -- Return User with functions and all characters
-  local group = User.getGroup -- Return user group (not character group)
-  if group == "admin" then
-    local x =  tonumber(args[1])
-    local y =   tonumber(args[2])
-    local z =   tonumber(args[3])
-    TriggerClientEvent('syn:tp', source,x,y,z)
-
-  else return false
-  end
-end)
-
 RegisterServerEvent("Cosmic:AddMoney")
 AddEventHandler("Cosmic:AddMoney", function(player, type, amount)
   local user = VorpCore.getUser(source)
@@ -263,7 +195,7 @@ AddEventHandler("Cosmic:AddMoney", function(player, type, amount)
   local targetCharacter = targetPlayer.getUsedCharacter
   local characterName = targetCharacter.firstname ..' '.. targetCharacter.lastname
   local group = user.getGroup
-  if group == 'moderator' or group == 'admin' then
+  if group == 'admin' then
     VORP.addMoney(player, type, amount)
     TriggerClientEvent("vorp:TipRight", source, string.format('$%s has been given to %s', amount, characterName), 3000)
   end
@@ -276,7 +208,7 @@ AddEventHandler("Cosmic:RemoveMoney", function(player, type, amount)
   local targetCharacter = targetPlayer.getUsedCharacter
   local characterName = targetCharacter.firstname ..' '.. targetCharacter.lastname
   local group = user.getGroup
-  if group == 'moderator' or group == 'admin' then
+  if group == 'admin' then
     VORP.removeMoney(player, type, amount)
     TriggerClientEvent("vorp:TipRight", source, string.format('$%s has been removed from %s', amount, characterName), 3000)
   end
