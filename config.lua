@@ -2,6 +2,9 @@ Config = {}
 Config.Client = {}
 Config.Server = {}
 
+-- Server config settings.
+
+
 -- Client config settings.
 
 -- Configurable controls
@@ -47,5 +50,3 @@ Config.Client.RelativeMode = true
 
 -- Whether to enable follow cam mode by default.
 Config.Client.FollowCam = true
-
--- Server config settings.

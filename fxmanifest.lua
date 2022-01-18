@@ -17,6 +17,7 @@ client_scripts {
 }
 
 server_scripts {
+	'server/database.lua',
   'server/main.lua',
 	'server/functions.lua',
 	'server/banmanager.lua',
