@@ -245,21 +245,13 @@ Citizen.CreateThread(function()
 
 			-- Ban reason.
 			if WarMenu.Button('Add ban reason', "") then
-				AddTextEntry("banreason", "Ban reason:")
-				DisplayOnscreenKeyboard(0, "banreason", "", "", "", "", "", 175)
+				TriggerEvent("vorpinputs:getInput", "Submit", "Enter ban reason", function(cb)
+        	banReason = cb
+    		end)
 
-			    while (UpdateOnscreenKeyboard() == 0) do
-		        Wait(0);
-			    end
-
-			    while (UpdateOnscreenKeyboard() == 2) do
-		        Wait(0);
-		        break
-			    end
-
-			    if (GetOnscreenKeyboardResult()) then
-						banReason = tostring(GetOnscreenKeyboardResult())
-					end
+				while banReason == nil do
+					Wait(0)
+				end
 			end
 
 			if WarMenu.Button('Ban player', "") then
@@ -292,23 +284,15 @@ Citizen.CreateThread(function()
 				if WarMenu.Button('Add money') then
 					local amount = nil
 
-					AddTextEntry("moneyamount", "Money amount:")
-					DisplayOnscreenKeyboard(0, "moneyamount", "", "", "", "", "", 175)
+					TriggerEvent("vorpinputs:getInput", "Submit", "Enter money amount", function(cb)
+	        	amount = cb
+	    		end)
 
-					while (UpdateOnscreenKeyboard() == 0) do
-						Wait(0);
+					while amount == nil do
+						Wait(0)
 					end
 
-					while (UpdateOnscreenKeyboard() == 2) do
-						Wait(0);
-						break
-					end
-
-					if (GetOnscreenKeyboardResult()) then
-						amount = tonumber(GetOnscreenKeyboardResult())
-					end
-
-					if amount ~= nil then
+					if amount ~= 'close' then
 						TriggerServerEvent('Cosmic:AddMoney', player.id, 0, amount)
 					end
 				end
@@ -318,23 +302,15 @@ Citizen.CreateThread(function()
 				if WarMenu.Button('Remove money') then
 					local amount = nil
 
-					AddTextEntry("moneyamount", "Money amount:")
-					DisplayOnscreenKeyboard(0, "moneyamount", "", "", "", "", "", 175)
+					TriggerEvent("vorpinputs:getInput", "Submit", "Enter money amount", function(cb)
+	        	amount = cb
+	    		end)
 
-					while (UpdateOnscreenKeyboard() == 0) do
-						Wait(0);
+					while amount == nil do
+						Wait(0)
 					end
 
-					while (UpdateOnscreenKeyboard() == 2) do
-						Wait(0);
-						break
-					end
-
-					if (GetOnscreenKeyboardResult()) then
-						amount = tonumber(GetOnscreenKeyboardResult())
-					end
-
-					if amount ~= nil then
+					if amount ~= 'close' then
 						TriggerServerEvent('Cosmic:RemoveMoney', player.id, 0, amount)
 					end
 				end
@@ -344,23 +320,15 @@ Citizen.CreateThread(function()
 				if WarMenu.Button('Add gold') then
 					local amount = nil
 
-					AddTextEntry("goldamount", "Gold amount:")
-					DisplayOnscreenKeyboard(0, "goldamount", "", "", "", "", "", 175)
+					TriggerEvent("vorpinputs:getInput", "Submit", "Enter gold amount", function(cb)
+	        	amount = cb
+	    		end)
 
-					while (UpdateOnscreenKeyboard() == 0) do
-						Wait(0);
+					while amount == nil do
+						Wait(0)
 					end
 
-					while (UpdateOnscreenKeyboard() == 2) do
-						Wait(0);
-						break
-					end
-
-					if (GetOnscreenKeyboardResult()) then
-						amount = tonumber(GetOnscreenKeyboardResult())
-					end
-
-					if amount ~= nil then
+					if amount ~= 'close' then
 						TriggerServerEvent('Cosmic:AddMoney', player.id, 1, amount)
 					end
 				end
@@ -370,23 +338,15 @@ Citizen.CreateThread(function()
 				if WarMenu.Button('Remove gold') then
 					local amount = nil
 
-					AddTextEntry("goldamount", "Gold amount:")
-					DisplayOnscreenKeyboard(0, "goldamount", "", "", "", "", "", 175)
+					TriggerEvent("vorpinputs:getInput", "Submit", "Enter gold amount", function(cb)
+	        	amount = cb
+	    		end)
 
-					while (UpdateOnscreenKeyboard() == 0) do
-						Wait(0);
+					while amount == nil do
+						Wait(0)
 					end
 
-					while (UpdateOnscreenKeyboard() == 2) do
-						Wait(0);
-						break
-					end
-
-					if (GetOnscreenKeyboardResult()) then
-						amount = tonumber(GetOnscreenKeyboardResult())
-					end
-
-					if amount ~= nil then
+					if amount ~= 'close' then
 						TriggerServerEvent('Cosmic:RemoveMoney', player.id, 1, amount)
 					end
 				end
@@ -396,36 +356,30 @@ Citizen.CreateThread(function()
 				if WarMenu.Button('Add item') then
 					local item = nil
 					local quantity = nil
-					local blockinput = true
 
-					AddTextEntry("item", "Item:")
-					DisplayOnscreenKeyboard(0, "item", "", "", "", "", "", 175)
+					TriggerEvent("vorpinputs:getInput", "Next", "Enter item name", function(cb)
+	        	item = cb
+	    		end)
 
-					while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
-						Citizen.Wait(0)
+					while item == nil do
+						Wait(0)
 					end
 
-					if UpdateOnscreenKeyboard() ~= 2 then
-						item = GetOnscreenKeyboardResult()
-					end
-					Citizen.Wait(500)
-					blockinput = false
+					if item ~= 'close' then
+						Wait(1000)
+						TriggerEvent("vorpinputs:getInput", "Add", "Enter item quantity", function(cb)
+							quantity = cb
+						end)
 
-					AddTextEntry("quantity", "Quantity:")
-					DisplayOnscreenKeyboard(0, "quantity", "", "", "", "", "", 175)
+						while quantity == nil do
+							Wait(0)
+						end
 
-					while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
-						Citizen.Wait(0)
-					end
-
-					if UpdateOnscreenKeyboard() ~= 2 then
-						quantity = tonumber(GetOnscreenKeyboardResult())
-					end
-					Citizen.Wait(500)
-					blockinput = false
-
-					if quantity ~= nil and item ~= nil then
-						TriggerServerEvent('Cosmic:GiveItem', player.id, item, quantity)
+						if quantity ~= 'close' then
+							if quantity ~= nil and item ~= nil then
+								TriggerServerEvent('Cosmic:GiveItem', player.id, item, quantity)
+							end
+						end
 					end
 				end
 			end
