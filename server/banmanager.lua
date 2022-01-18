@@ -83,7 +83,7 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
   -- Apparently you need this here?
   Citizen.Wait(0)
 
-  deferrals.update(string.format('Hello %s. We are checking if you are banned.', name))
+  deferrals.update('Checking if you are banned...')
 
   local banned, reason = Cosmic.Functions.IsPlayerBanned(player)
 
