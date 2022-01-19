@@ -359,25 +359,27 @@ Citizen.CreateThread(function()
 
 					TriggerEvent("vorpinputs:getInput", "Next", "Enter item name", function(cb)
 	        	item = cb
+						cb = nil
 	    		end)
 
 					while item == nil do
 						Wait(0)
 					end
 
-					if item ~= 'close' then
-						TriggerEvent("vorpinputs:getInput", "Add", "Enter item quantity", function(cb)
-							quantity = cb
+					-- Wait is required otherwise the quantity input never displays.
+					Wait(500)
+
+					if item ~= 'close' and item ~= nil then
+						TriggerEvent("vorpinputs:getInput", "Add", "Enter item quantity", function(quantitycb)
+							quantity = quantitycb
 						end)
 
 						while quantity == nil do
 							Wait(0)
 						end
 
-						if quantity ~= 'close' then
-							if quantity ~= nil and item ~= nil then
-								TriggerServerEvent('Cosmic:GiveItem', player.id, item, quantity)
-							end
+						if quantity ~= 'close' and quantity ~= nil then
+							TriggerServerEvent('Cosmic:GiveItem', player.id, item, quantity)
 						end
 					end
 				end
