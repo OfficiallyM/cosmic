@@ -17,6 +17,7 @@ local FollowCam = Config.Client.FollowCam
 local isDead = IsPedDeadOrDying(PlayerPedId())
 local permissions = {}
 local bans = {}
+local menuOpen = false
 
 -- Ban related stuff.
 local currentBanIndex = 1
@@ -29,7 +30,11 @@ Citizen.CreateThread(function()
 		Citizen.Wait(1)
 
 		if IsControlJustPressed(0, 0x3C3DD371) and not isDead then -- pgdown key
-			TriggerServerEvent("Cosmic:CheckGroup")
+			if menuOpen then
+				WarMenu.CloseMenu()
+			else
+				TriggerServerEvent("Cosmic:CheckGroup")
+			end
 		end
 
 		if spectating then
@@ -56,6 +61,10 @@ Citizen.CreateThread(function()
 			local noclip = false
 			local speed = 1.28
 			CancelCamera()
+		end
+
+		if WarMenu.IsMenuAboutToBeClosed() then
+			menuOpen = false
 		end
 	end
 end)
@@ -119,6 +128,7 @@ AddEventHandler("OpenMenu", function()
 
 	if WarMenu.IsAnyMenuOpened() then return end
   WarMenu.OpenMenu('CosmicMenu')
+	menuOpen = true
 end)
 
 Citizen.CreateThread(function()
