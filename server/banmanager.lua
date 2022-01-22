@@ -57,12 +57,13 @@ AddEventHandler("Cosmic:BanList", function()
   local _source = source
 
   if Cosmic.Permissions.CheckPermission('banmanager.view') then
-    local results = exports.ghmattimysql:fetchSync('SELECT * FROM bans')
-    for id, ban in pairs(results) do
-      results[id].unban = os.date("*t", ban.unban)
-      results[id].bantime = os.date("*t", ban.bantime)
-    end
-    TriggerLatentClientEvent("Cosmic:GetBanList", _source, 100000, results)
+    exports.ghmattimysql:execute('SELECT * FROM bans', {}, function(results)
+      for id, ban in pairs(results) do
+        results[id].unban = os.date("*t", ban.unban)
+        results[id].bantime = os.date("*t", ban.bantime)
+      end
+      TriggerLatentClientEvent("Cosmic:GetBanList", _source, 100000, results)
+    end)
   end
 end)
 
